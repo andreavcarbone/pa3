@@ -1,0 +1,175 @@
+---
+title: "ggplot and tidy
+author: "AVCarbone"
+date: "2025-02-17"
+output: html_document
+---
+
+
+```{r}
+library("tidyverse")
+library("ds4ling")
+library("untidydata")
+
+  
+
+glimpse(test_scores_rm)
+
+cor(test_scores_rm$test1, test_scores_rm$test2)
+
+test_scores_rm|>
+ ggplot()
+ aes(x=test1, y=test2) +
+  geom_point()
+cor.test(test_scores_rm$test1, test_scores_rm$test2)
+
+```
+```{r}
+glimpse(mtcars)
+mtcars|>
+  select(mpg, displacement=disp,am)
+select(mtcars,cyl,hp,am)
+select(mtcars,am:carb)
+select(mtcars,hello_world=mpg)
+
+
+  select()
+```
+
+```{r}
+mtcars|>
+  filter (mpg < 20 & mpg > 14)
+
+mtcars|>
+  filter (cyl == 6)
+
+mtcars|>
+  filter (mpg > 20 | disp < 200)
+
+
+
+```
+
+```{r}
+mtcars|>
+  arrange (cyl & disp)
+
+mtcars|>
+  arrange (desc (mpg))
+```
+
+```{r}
+mtcars|>
+  select(mpg)|>
+  mutate(mpg_x2 = mpg * 2)
+```
+
+
+```{r}
+mtcars|>
+  select(mpg) |>
+  mutate(mpg_c = mpg - mean(mpg))
+
+```
+
+```{r}
+mtcars|>
+  select(mpg) |>
+  mutate(value = if_else(mpg > 18, "good", "bad"))
+
+
+```
+
+
+```{r}
+#create new column called 'opinion'
+# if mpg greater than 20 , then "good"
+# if mpg less than 20 but greater than 15, then "meh"
+# if mpg less than 15, then "bad"
+
+mtcars|>
+  select(mpg) |>
+  mutate(
+    opinion = case_when (
+      mpg > 20 ~ "good",
+      mpg< 20 & mpg > 15 ~ "meh",
+      mpg <= 15 ~ "bad")
+    ( |>
+        ggplot() +
+        aes(x =opinion, y = mpg) +
+        geom_plot )
+      
+      
+      
+      
+    )
+  )
+```
+
+```{r}
+#calculate the mean value of mpg in the dataset mtcars
+mtcars|>
+  summarize(avg = mean (mpg))
+
+# calculate the mean value of mpg as a function of cyl
+mtcars|>
+  group_by(cyl) |>
+  summarize(avg = mean (mpg))
+
+                #c the mean, std dev, min, andmax of mpg as a function of cyl
+mtcars|>
+  group_by(cyl) |>
+  summarize(
+    avg = mean (mpg),
+    std = sd(mpg),
+    mn = min(mpg),
+    mx = max (mpg)
+  )
+
+```
+
+# tidyr
+
+```{r}
+pre_post |>
+  separate(
+    col = id,
+    into = c("lang", "trash"),
+    sep =4,
+    remove = FALSE
+    
+  ) |>
+  separate(
+    col = spec,
+    into = c("groups", "prof"),
+    sep = "_"
+    
+  )
+
+# pivot_longer
+pre_post |> 
+  pivot_longer(
+    cols = c("test1", "test"),
+    names_to = "test"
+    values_to = "scores"
+  )|>
+  pivot_wider(
+    names_from = scores
+    |>
+mutate(diff = test2 / test1)
+
+language_diversity |>
+  pivot_wider(
+    names_from = Measurement
+    values_from = Value
+  ) |>
+  write_csv("lang_tidy.csv")
+  
+
+  ggplot() +
+  aes(x = log())
+  )
+  )
+
+language_diversity```
+ 

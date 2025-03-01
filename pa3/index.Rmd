@@ -1,0 +1,70 @@
+---
+title: "Index"
+author: "AVCarbone"
+date: "2025-03-03"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(languageR)
+library(untidydata)
+```
+
+
+```{r}
+
+data(package = "languageR") 
+data(package = "untidydata")
+```
+
+```{r}
+tabla <- spanish_vowels |> 
+  separate (
+    col = label,
+    into = c("id","gender", "vowel"),
+    sep = "-"
+  )
+   
+ 
+```
+#descriptive information on statistics
+
+```{r}
+tabla|>
+  group_by(gender)|>
+  summarise(
+    f1 = mean(f1),
+    f2 = mean(f2)
+  )
+   
+```
+
+
+```{r}
+#modelo
+model <- lm(
+  f1 ~ f2,
+  data = tabla
+)
+
+print(model)
+```
+
+```{r}
+# linear model
+tabla |>
+  ggplot() +
+  aes(x = f1, y = f2) +
+  labs(x = "f1", y = "f2", title = "f1 by f2 values") +
+  geom_point () +
+  geom_smooth(method = "lm")
+  
+
+
+```
+
+#the slightly downward line suggests a possible negative correlation between f1 and f2 values. This slightly negative correlation suggests that as f2 increases, f1 decreases.  
+
+
